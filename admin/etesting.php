@@ -24,8 +24,6 @@ if(isset($_SESSION['userID']))
 
 
 ?>
-
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -40,7 +38,7 @@ if(isset($_SESSION['userID']))
     <title><?php echo $title; ?></title>
 
     <!-- Bootstrap Core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="vendor/bootstrap/css/bootstrap.css" rel="stylesheet">
 
     <!-- MetisMenu CSS -->
     <link href="vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
@@ -54,12 +52,31 @@ if(isset($_SESSION['userID']))
     <!-- Custom Fonts -->
     <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
+	    <!-- jQuery -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="vendor/metisMenu/metisMenu.min.js"></script>
+
+    <!-- DataTables JavaScript -->
+    <script src="vendor/datatables/js/jquery.dataTables.min.js"></script>
+    <script src="vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+    <script src="vendor/datatables-responsive/dataTables.responsive.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="dist/js/sb-admin-2.js"></script>
+
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+    <script>
+    $(document).ready(function() {
+        $('#dataTables-example').DataTable({
+            responsive: true
+        });
+    });
+    </script>
 
 </head>
 
@@ -80,215 +97,7 @@ if(isset($_SESSION['userID']))
             </div>
             <!-- /.navbar-header -->
 
-            <ul class="nav navbar-top-links navbar-right">
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-envelope fa-fw"></i> <i class="fa fa-caret-down"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-messages">
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <strong>John Smith</strong>
-                                    <span class="pull-right text-muted">
-                                        <em>Yesterday</em>
-                                    </span>
-                                </div>
-                                <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <strong>John Smith</strong>
-                                    <span class="pull-right text-muted">
-                                        <em>Yesterday</em>
-                                    </span>
-                                </div>
-                                <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <strong>John Smith</strong>
-                                    <span class="pull-right text-muted">
-                                        <em>Yesterday</em>
-                                    </span>
-                                </div>
-                                <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque eleifend...</div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a class="text-center" href="#">
-                                <strong>Read All Messages</strong>
-                                <i class="fa fa-angle-right"></i>
-                            </a>
-                        </li>
-                    </ul>
-                    <!-- /.dropdown-messages -->
-                </li>
-                <!-- /.dropdown -->
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-tasks fa-fw"></i> <i class="fa fa-caret-down"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-tasks">
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <p>
-                                        <strong>Task 1</strong>
-                                        <span class="pull-right text-muted">40% Complete</span>
-                                    </p>
-                                    <div class="progress progress-striped active">
-                                        <div class="progress-bar progress-bar-success" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">
-                                            <span class="sr-only">40% Complete (success)</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <p>
-                                        <strong>Task 2</strong>
-                                        <span class="pull-right text-muted">20% Complete</span>
-                                    </p>
-                                    <div class="progress progress-striped active">
-                                        <div class="progress-bar progress-bar-info" role="progressbar" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: 20%">
-                                            <span class="sr-only">20% Complete</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <p>
-                                        <strong>Task 3</strong>
-                                        <span class="pull-right text-muted">60% Complete</span>
-                                    </p>
-                                    <div class="progress progress-striped active">
-                                        <div class="progress-bar progress-bar-warning" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%">
-                                            <span class="sr-only">60% Complete (warning)</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <p>
-                                        <strong>Task 4</strong>
-                                        <span class="pull-right text-muted">80% Complete</span>
-                                    </p>
-                                    <div class="progress progress-striped active">
-                                        <div class="progress-bar progress-bar-danger" role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" style="width: 80%">
-                                            <span class="sr-only">80% Complete (danger)</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a class="text-center" href="#">
-                                <strong>See All Tasks</strong>
-                                <i class="fa fa-angle-right"></i>
-                            </a>
-                        </li>
-                    </ul>
-                    <!-- /.dropdown-tasks -->
-                </li>
-                <!-- /.dropdown -->
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-bell fa-fw"></i> <i class="fa fa-caret-down"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-alerts">
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-users fa-fw"></i> New Comment
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-twitter fa-fw"></i> 3 New Followers
-                                    <span class="pull-right text-muted small">12 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-envelope fa-fw"></i> Message Sent
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-tasks fa-fw"></i> New Task
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a href="#">
-                                <div>
-                                    <i class="fa fa-upload fa-fw"></i> Server Rebooted
-                                    <span class="pull-right text-muted small">4 minutes ago</span>
-                                </div>
-                            </a>
-                        </li>
-                        <li class="divider"></li>
-                        <li>
-                            <a class="text-center" href="#">
-                                <strong>See All Alerts</strong>
-                                <i class="fa fa-angle-right"></i>
-                            </a>
-                        </li>
-                    </ul>
-                    <!-- /.dropdown-alerts -->
-                </li>
-                <!-- /.dropdown -->
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="fa fa-user fa-fw"></i> User Profile</a>
-                        </li>
-                        <li><a href="#"><i class="fa fa-gear fa-fw"></i> Settings</a>
-                        </li>
-                        <li class="divider"></li>
-                        <li><a href="../logout.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a>
-                        </li>
-                    </ul>
-                    <!-- /.dropdown-user -->
-                </li>
-                <!-- /.dropdown -->
-            </ul>
-            <!-- /.navbar-top-links -->
+
 
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
@@ -342,11 +151,162 @@ if(isset($_SESSION['userID']))
        <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">Tables</h1>
+                    <h1 class="page-header">ข้อสอบ</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
+		    <div class="row">
+				<div class="pull-right">
+				<p>
+				<div class="btn-toolbar" role="toolbar">
+				  <div class="btn-group" role="group">
+					<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal"><i class="fa fa-plus-square-o"></i> เพิ่มชุดข้อสอบ</button>
+				  </div>
+				</div>
+				</p>
+				</div>
+		    </div>
+	
+			<!-- Modal -->
+		  <div class="modal fade" id="myModal" role="dialog">
+			<div class="modal-dialog">
+
+			  <!-- Modal content-->
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <button type="button" class="close" data-dismiss="modal">&times;</button>
+				  <h4 class="modal-title">เพิ่มชุดข้อสอบ</h4>
+				</div>
+				<div class="modal-body">
+				         <form class="registerForm" action="stdregister.php" method="post" role="form" id="registerForm" enctype="multipart/form-data">
+						 	<div class="row">
+						 		<div class="col-md-8">
+						 			<div class='form-group'>
+										<label for='stdYear'>ปีการศึกษา :</label>
+											<select class='form-control' name='stdYear' id='stdYear' size="1">
+												<option value="1">1.รู้จักบริการต่าง ๆ บนอินเทอร์เน็ต</option>
+												<option value="2">2.การสืบค้นข้อมูลบนอินเทอร์เน็ต</option>
+												<option value="3">3.การใช้เสิร์ชเอนจิน (Search Engine)</option>
+												<option value="4">4.อีเมล (E-mail)</option>
+												<option value="5">5.การสมัครใช้งานอีเมล</option>
+												<option value="6">6.การส่งอีเมล</option>
+												<option value="7">7.การใช้งานอีเมล</option>
+												<option value="8">8.อีคอมเมิร์ซ (E-Commerce)</option>
+												<option value="9">9.บล็อก (Blog)</option>
+												<option value="10">10.บล็อกเกอร์ (Blogger)</option>
+											</select>
+									</div>
+								</div>
+							</div>
+						 <div class="row">
+						 	<div class="col-md-4">
+									<div class='form-group'>
+											<label for='stdID'>ชื่อผู้ใช้งาน :</label>
+											<input type='text' class='form-control' id='stdID' name='stdID' data-validation="required" maxlength="5" data-validation-error-msg="กรุณาใส่รหัสประจำตัวนักเรียน 5 ตัว" onBlur="checkAvailability()" ><span id="user-availability-status"></span> 
+									</div>
+											<script>
+												function checkAvailability() {
+													$("#loaderIcon").show();
+													jQuery.ajax({
+													url: "checkuser.php",
+													data:'stdID='+$("#stdID").val(),
+													type: "POST",
+													success:function(data){
+													$("#user-availability-status").html(data);
+													$("#loaderIcon").hide();
+													},
+													error:function (){}
+													});
+													}
+											</script>
+							</div>
+						</div>
+						 <div class="row">
+						 	<div class="col-md-4">
+						 		<div class='form-group'>
+										<label for='stdTitle'>คำนำหน้า :</label>
+											<select class='form-control' name='stdTitle' id='stdTitle'>
+												<option>เด็กชาย</option>
+												<option>เด็กหญิง</option>
+												<option>นาย</option>
+												<option>นางสาว</option>
+											</select>
+								</div>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-md-6">
+								<div class='form-group'>
+										<label for='stdName'>ชื่อ :</label>
+										<input type='text' class='form-control' id='stdName' name='stdName' data-validation="required" maxlength="50" data-validation-error-msg="กรุณาใส่ชื่อ" >
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class='form-group'>
+										<label for='stdSurname'>นามสกุล :</label>
+										<input type='text' class='form-control' id='stdSurname' name='stdSurname' data-validation="required" maxlength="50" data-validation-error-msg="กรุณาใส่นามสกุล" >
+								</div>
+							</div>
+						 </div>
+						 <div class="row">
+						 <div class="col-md-4">
+							 <div class='form-group'>
+									<label for='stdClass'>ระดับชั้น :</label>
+									<select class='form-control' name='stdClass' id='stdClass'>
+											<option value='1'>ชั้นมัธยมศึกษาปีที่ 1</option>
+											<option value='2'>ชั้นมัธยมศึกษาปีที่ 2</option>
+											<option value='3'>ชั้นมัธยมศึกษาปีที่ 3</option>
+											<option value='4'>ชั้นมัธยมศึกษาปีที่ 4</option>
+											<option value='5'>ชั้นมัธยมศึกษาปีที่ 5</option>
+											<option value='6'>ชั้นมัธยมศึกษาปีที่ 6</option>
+									</select>
+							</div>
+						</div>
+						<div class="col-md-2">
+							<div class='form-group'>
+									<label for='stdRoom'>ห้อง :</label>
+									<select class='form-control' name='stdRoom' id='stdRoom'>
+										<option value='1'>1</option>
+										<option value='2'>2</option>
+										<option value='3'>3</option>
+										<option value='4'>4</option>
+										<option value='5'>5</option>
+									 </select>
+							</div>
+						</div>
+						<div class="col-md-6">
+						<div class='form-group'>
+								<label for='stdPasswd'>รหัสผ่าน :</label>
+								<input type='password' class='form-control' size='8' id='stdPasswd' name='stdPasswd' data-validation="required" maxlength="50" data-validation-error-msg="กรุณาใส่รหัสผ่าน">
+						</div>
+						</div>
+						</div>
+						<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+						<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
+						<link href="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/theme-default.min.css"
+									rel="stylesheet" type="text/css" />
+						<script>
+							$.validate({
+									form : '#registerForm',
+									validateOnBlur : true, // disable validation when input looses focus
+									scrollToTopOnError : false, // Set this property to true on longer forms
+								  });
+						</script>
+					  </div>
+					  <div class="modal-footer">
+						<button type="button" class="btn btn-danger" data-dismiss="modal">ปิด</button>
+						<button type="Submit" name="Submit" class="btn btn-primary">สมัครสมาชิก</button>
+					  </div>
+					  </form>
+				</div>
+			  </div>
+
+			</div>
+
+	
+	
+	
             <div class="row">
                 <div class="col-lg-12">
                     <div class="panel panel-default">
@@ -1077,33 +1037,33 @@ if(isset($_SESSION['userID']))
         <!-- /#page-wrapper -->
 
     </div>
+</div>
+
+
+<!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Modal Header</h4>
+        </div>
+        <div class="modal-body">
+          <p>Some text in the modal.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
     <!-- /#wrapper -->
 
-    <!-- jQuery -->
-    <script src="../vendor/jquery/jquery.min.js"></script>
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="../vendor/bootstrap/js/bootstrap.min.js"></script>
-
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="../vendor/metisMenu/metisMenu.min.js"></script>
-
-    <!-- DataTables JavaScript -->
-    <script src="../vendor/datatables/js/jquery.dataTables.min.js"></script>
-    <script src="../vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
-    <script src="../vendor/datatables-responsive/dataTables.responsive.js"></script>
-
-    <!-- Custom Theme JavaScript -->
-    <script src="../dist/js/sb-admin-2.js"></script>
-
-    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-    <script>
-    $(document).ready(function() {
-        $('#dataTables-example').DataTable({
-            responsive: true
-        });
-    });
-    </script>
 
 </body>
 
