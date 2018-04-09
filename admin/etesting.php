@@ -2,7 +2,7 @@
 <?php
 include('../config.inc.php');
 session_start();
-require_once('../dbconnect.php');
+require('../dbconnect.php');
 if(isset($_SESSION['userID']))
 	{
 		
@@ -42,6 +42,7 @@ if(isset($_SESSION['userID']))
 
     <!-- MetisMenu CSS -->
     <link href="vendor/metisMenu/metisMenu.min.css" rel="stylesheet">
+	
 
     <!-- Custom CSS -->
     <link href="dist/css/sb-admin-2.css" rel="stylesheet">
@@ -52,31 +53,7 @@ if(isset($_SESSION['userID']))
     <!-- Custom Fonts -->
     <link href="vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-	    <!-- jQuery -->
-    <script src="vendor/jquery/jquery.min.js"></script>
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
-
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="vendor/metisMenu/metisMenu.min.js"></script>
-
-    <!-- DataTables JavaScript -->
-    <script src="vendor/datatables/js/jquery.dataTables.min.js"></script>
-    <script src="vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
-    <script src="vendor/datatables-responsive/dataTables.responsive.js"></script>
-
-    <!-- Custom Theme JavaScript -->
-    <script src="dist/js/sb-admin-2.js"></script>
-
-    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
-    <script>
-    $(document).ready(function() {
-        $('#dataTables-example').DataTable({
-            responsive: true
-        });
-    });
-    </script>
 
 </head>
 
@@ -93,18 +70,15 @@ if(isset($_SESSION['userID']))
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">SB Admin v2.0</a>
+                <a class="navbar-brand" href="index.php">SB Admin v2.0</a>
             </div>
             <!-- /.navbar-header -->
-
-
-
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
                         <li class="sidebar-search">
                             <div class="input-group custom-search-form">
-                                <input type="text" class="form-control" placeholder="Search...">
+                                <input type="text" class="form-control" placeholder="ค้นหา...">
                                 <span class="input-group-btn">
                                 <button class="btn btn-default" type="button">
                                     <i class="fa fa-search"></i>
@@ -151,7 +125,7 @@ if(isset($_SESSION['userID']))
        <div id="page-wrapper">
             <div class="row">
                 <div class="col-lg-12">
-                    <h1 class="page-header">ข้อสอบ</h1>
+                    <h1 class="page-header">เมนู : ข้อสอบ</h1>
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
@@ -168,7 +142,7 @@ if(isset($_SESSION['userID']))
 				</div>
 		    </div>
 	
-			<!-- Modal -->
+		  <!-- Modal -->
 		  <div class="modal fade" id="myModal" role="dialog">
 			<div class="modal-dialog">
 
@@ -179,108 +153,47 @@ if(isset($_SESSION['userID']))
 				  <h4 class="modal-title">เพิ่มชุดข้อสอบ</h4>
 				</div>
 				<div class="modal-body">
-				         <form class="registerForm" action="stdregister.php" method="post" role="form" id="registerForm" enctype="multipart/form-data">
-						 	<div class="row">
-						 		<div class="col-md-8">
-						 			<div class='form-group'>
-										<label for='stdYear'>ปีการศึกษา :</label>
-											<select class='form-control' name='stdYear' id='stdYear' size="1">
-												<option value="1">1.รู้จักบริการต่าง ๆ บนอินเทอร์เน็ต</option>
-												<option value="2">2.การสืบค้นข้อมูลบนอินเทอร์เน็ต</option>
-												<option value="3">3.การใช้เสิร์ชเอนจิน (Search Engine)</option>
-												<option value="4">4.อีเมล (E-mail)</option>
-												<option value="5">5.การสมัครใช้งานอีเมล</option>
-												<option value="6">6.การส่งอีเมล</option>
-												<option value="7">7.การใช้งานอีเมล</option>
-												<option value="8">8.อีคอมเมิร์ซ (E-Commerce)</option>
-												<option value="9">9.บล็อก (Blog)</option>
-												<option value="10">10.บล็อกเกอร์ (Blogger)</option>
-											</select>
-									</div>
-								</div>
-							</div>
+				         <form class="addExamForm" action="addexam.php" method="post" role="form" id="addExamForm" enctype="multipart/form-data">
 						 <div class="row">
 						 	<div class="col-md-4">
 									<div class='form-group'>
-											<label for='stdID'>ชื่อผู้ใช้งาน :</label>
-											<input type='text' class='form-control' id='stdID' name='stdID' data-validation="required" maxlength="5" data-validation-error-msg="กรุณาใส่รหัสประจำตัวนักเรียน 5 ตัว" onBlur="checkAvailability()" ><span id="user-availability-status"></span> 
+										<?php 
+											$sql="SELECT chapterID FROM tb_chapter ORDER BY chapterID DESC";
+											$rs= mysqli_query($con,$sql); 
+										if (mysqli_num_rows($rs)==0){
+											$vl=str_repeat("0",2-1)."1";
+										}else{
+											$row = mysqli_fetch_array($rs);
+											$s="9".substr($row['chapterID'],- 2);
+											$vl=substr(($s+1),- 2);
+											}
+										?>	
+											<label for='chpaterID'>รหัสบทเรียน :</label>
+											<input type='text' class='form-control' id='chapterID' name='chapterID' value="<?php echo $vl;?>" disabled>
 									</div>
-											<script>
-												function checkAvailability() {
-													$("#loaderIcon").show();
-													jQuery.ajax({
-													url: "checkuser.php",
-													data:'stdID='+$("#stdID").val(),
-													type: "POST",
-													success:function(data){
-													$("#user-availability-status").html(data);
-													$("#loaderIcon").hide();
-													},
-													error:function (){}
-													});
-													}
-											</script>
 							</div>
-						</div>
-						 <div class="row">
-						 	<div class="col-md-4">
-						 		<div class='form-group'>
-										<label for='stdTitle'>คำนำหน้า :</label>
-											<select class='form-control' name='stdTitle' id='stdTitle'>
-												<option>เด็กชาย</option>
-												<option>เด็กหญิง</option>
-												<option>นาย</option>
-												<option>นางสาว</option>
-											</select>
+							 </div>
+							<div class="row">
+							<div class="col-md-12">
+								<div class='form-group'>
+										<label for='chapterName'>ชื่อชุดข้อสอบ :</label>
+										<textarea  class='form-control' id='chapterName' name='chapterName' data-validation="required" rows="1" data-validation-error-msg="กรุณาใส่ชื่อชุดข้อสอบ" ></textarea>
 								</div>
 							</div>
-						</div>
+							</div>
 						<div class="row">
 							<div class="col-md-6">
 								<div class='form-group'>
-										<label for='stdName'>ชื่อ :</label>
-										<input type='text' class='form-control' id='stdName' name='stdName' data-validation="required" maxlength="50" data-validation-error-msg="กรุณาใส่ชื่อ" >
+										<label for='chapterScore'>คะแนน :</label>
+										<input type='text' class='form-control' id='chapterScore' name='chapterScore' data-validation="required" maxlength="300" data-validation-error-msg="กรุณาใส่คะแนนของชุดข้อสอบ" >
 								</div>
 							</div>
 							<div class="col-md-6">
 								<div class='form-group'>
-										<label for='stdSurname'>นามสกุล :</label>
-										<input type='text' class='form-control' id='stdSurname' name='stdSurname' data-validation="required" maxlength="50" data-validation-error-msg="กรุณาใส่นามสกุล" >
+										<label for='chapterTime'>เวลา(นาที) :</label>
+										<input type='text' class='form-control' id='chapterTime' name='chapterTime' data-validation="required" maxlength="300" data-validation-error-msg="กรุณาใส่เวลาในการทำข้อสอบ" >
 								</div>
 							</div>
-						 </div>
-						 <div class="row">
-						 <div class="col-md-4">
-							 <div class='form-group'>
-									<label for='stdClass'>ระดับชั้น :</label>
-									<select class='form-control' name='stdClass' id='stdClass'>
-											<option value='1'>ชั้นมัธยมศึกษาปีที่ 1</option>
-											<option value='2'>ชั้นมัธยมศึกษาปีที่ 2</option>
-											<option value='3'>ชั้นมัธยมศึกษาปีที่ 3</option>
-											<option value='4'>ชั้นมัธยมศึกษาปีที่ 4</option>
-											<option value='5'>ชั้นมัธยมศึกษาปีที่ 5</option>
-											<option value='6'>ชั้นมัธยมศึกษาปีที่ 6</option>
-									</select>
-							</div>
-						</div>
-						<div class="col-md-2">
-							<div class='form-group'>
-									<label for='stdRoom'>ห้อง :</label>
-									<select class='form-control' name='stdRoom' id='stdRoom'>
-										<option value='1'>1</option>
-										<option value='2'>2</option>
-										<option value='3'>3</option>
-										<option value='4'>4</option>
-										<option value='5'>5</option>
-									 </select>
-							</div>
-						</div>
-						<div class="col-md-6">
-						<div class='form-group'>
-								<label for='stdPasswd'>รหัสผ่าน :</label>
-								<input type='password' class='form-control' size='8' id='stdPasswd' name='stdPasswd' data-validation="required" maxlength="50" data-validation-error-msg="กรุณาใส่รหัสผ่าน">
-						</div>
-						</div>
 						</div>
 						<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 						<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
@@ -288,7 +201,7 @@ if(isset($_SESSION['userID']))
 									rel="stylesheet" type="text/css" />
 						<script>
 							$.validate({
-									form : '#registerForm',
+									form : '#addExamForm',
 									validateOnBlur : true, // disable validation when input looses focus
 									scrollToTopOnError : false, // Set this property to true on longer forms
 								  });
@@ -296,773 +209,161 @@ if(isset($_SESSION['userID']))
 					  </div>
 					  <div class="modal-footer">
 						<button type="button" class="btn btn-danger" data-dismiss="modal">ปิด</button>
-						<button type="Submit" name="Submit" class="btn btn-primary">สมัครสมาชิก</button>
+						<button type="Submit" name="Submit" class="btn btn-primary">เพิ่มชุดข้อสอบ</button>
 					  </div>
 					  </form>
 				</div>
 			  </div>
+			  </div>
+	
+			<!-- ModalAddExam -->
+		  <div class="modal fade" id="ModalAddExam" role="dialog">
+			<div class="modal-dialog">
 
-			</div>
-
+			  <!-- Modal content-->
+			  <div class="modal-content">
+				<div class="modal-header">
+				  <button type="button" class="close" data-dismiss="modal">&times;</button>
+				  <h4 class="modal-title">เพิ่มชุดข้อสอบ</h4>
+				</div>
+				<div class="modal-body">
+				         <form class="addExamForm" action="addexam.php" method="post" role="form" id="addExamForm" enctype="multipart/form-data">
+						 <div class="row">
+						 	<div class="col-md-4">
+									<div class='form-group'>
+											<label for='chpaterID'>รหัสบทเรียน :</label>
+											<input type='text' class='form-control' id='chapterID' name='chapterID' disabled>
+									</div>
+							</div>
+							 </div>
+							<div class="row">
+							<div class="col-md-12">
+								<div class='form-group'>
+										<label for='chapterName'>ชื่อชุดข้อสอบ :</label>
+										<textarea  class='form-control' id='chapterName' name='chapterName' data-validation="required" rows="1" data-validation-error-msg="กรุณาใส่ชื่อชุดข้อสอบ" ></textarea>
+								</div>
+							</div>
+							</div>
+						<div class="row">
+							<div class="col-md-6">
+								<div class='form-group'>
+										<label for='chapterScore'>คะแนน :</label>
+										<input type='text' class='form-control' id='chapterScore' name='chapterScore' data-validation="required" maxlength="300" data-validation-error-msg="กรุณาใส่คะแนนของชุดข้อสอบ" >
+								</div>
+							</div>
+							<div class="col-md-6">
+								<div class='form-group'>
+										<label for='chapterTime'>เวลา(นาที) :</label>
+										<input type='text' class='form-control' id='chapterTime' name='chapterTime' data-validation="required" maxlength="300" data-validation-error-msg="กรุณาใส่เวลาในการทำข้อสอบ" >
+								</div>
+							</div>
+						</div>
+						<script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+						<script src="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/jquery.form-validator.min.js"></script>
+						<link href="//cdnjs.cloudflare.com/ajax/libs/jquery-form-validator/2.3.26/theme-default.min.css"
+									rel="stylesheet" type="text/css" />
+						<script>
+							$.validate({
+									form : '#addExamForm',
+									validateOnBlur : true, // disable validation when input looses focus
+									scrollToTopOnError : false, // Set this property to true on longer forms
+								  });
+						</script>
+					  </div>
+					  <div class="modal-footer">
+						<button type="button" class="btn btn-danger" data-dismiss="modal">ปิด</button>
+						<button type="Submit" name="Submit" class="btn btn-primary">เพิ่มชุดข้อสอบ</button>
+					  </div>
+					  </form>
+				</div>
+			  </div>
+			  </div>
 	
 	
 	
             <div class="row">
-                <div class="col-lg-12">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            DataTables Advanced Tables
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
+                <div class="col-lg-12">    
                             <table width="100%" class="table table-striped table-bordered table-hover" id="dataTables-example">
                                 <thead>
                                     <tr>
-                                        <th>Rendering engine</th>
-                                        <th>Browser</th>
-                                        <th>Platform(s)</th>
-                                        <th>Engine version</th>
-                                        <th>CSS grade</th>
+                                        <th class="text-center">ชุดที่</th>
+                                        <th class="text-center">ชื่อชุดข้อสอบ</th>
+										<th class="text-center">จำนวนข้อสอบ</th>
+                                        <th class="text-center">คะแนนเต็ม</th>
+                                        <th class="text-center">เวลา/นาที</th>
+                                        <th class="text-center">แก้ไข</th>
+										<th class="text-center">ลบ</th>
+										<th class="text-center">เพิ่มข้อสอบ</th>
+										<th class="text-center">แสดงข้อสอบ</th>
                                     </tr>
                                 </thead>
+								<?php
+									$sql = "SELECT * FROM tb_chapter";
+									$query = mysqli_query($con,$sql);
+								?>
                                 <tbody>
+								<?php 
+									while($result=mysqli_fetch_array($query,MYSQLI_ASSOC))
+									{
+								?>
                                     <tr class="odd gradeX">
-                                        <td>Trident</td>
-                                        <td>Internet Explorer 4.0</td>
-                                        <td>Win 95+</td>
-                                        <td class="center">4</td>
-                                        <td class="center">X</td>
+                                        <td class="text-center" width="10%"><?php echo $result["chapterID"];?></td>
+                                        <td><?php echo $result["chapterName"];?></td>
+										<td class="text-center" width="10%">30</td>
+                                        <td class="text-center" width="10%"><?php echo $result["chapterScore"];?></td>
+                                        <td class="text-center" width="10%"><?php echo $result["chapterTime"];?></td>
+										<td class="text-center" width="5%"><img class="img-responsive center-block" src="../img/file-4.png" width="20" height="20"></td>
+										<td class="text-center" width="5%"><img class="img-responsive center-block" src="../img/file-13.png" width="20" height="20"></td>
+                                        <td class="text-center" width="10%"><a class="addExam" href="#" data-toggle="modal" data-target="#ModalAddExam" data-id="<?php echo $result["chapterID"];?>"><img class="img-responsive center-block" src="../img/file.png" width="20" height="20"></a></td>
+										<td class="text-center" width="10%"><img class="img-responsive center-block" src="../img/notepad-12.png" width="20" height="20"</td>
                                     </tr>
-                                    <tr class="even gradeC">
-                                        <td>Trident</td>
-                                        <td>Internet Explorer 5.0</td>
-                                        <td>Win 95+</td>
-                                        <td class="center">5</td>
-                                        <td class="center">C</td>
-                                    </tr>
-                                    <tr class="odd gradeA">
-                                        <td>Trident</td>
-                                        <td>Internet Explorer 5.5</td>
-                                        <td>Win 95+</td>
-                                        <td class="center">5.5</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="even gradeA">
-                                        <td>Trident</td>
-                                        <td>Internet Explorer 6</td>
-                                        <td>Win 98+</td>
-                                        <td class="center">6</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="odd gradeA">
-                                        <td>Trident</td>
-                                        <td>Internet Explorer 7</td>
-                                        <td>Win XP SP2+</td>
-                                        <td class="center">7</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="even gradeA">
-                                        <td>Trident</td>
-                                        <td>AOL browser (AOL desktop)</td>
-                                        <td>Win XP</td>
-                                        <td class="center">6</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Firefox 1.0</td>
-                                        <td>Win 98+ / OSX.2+</td>
-                                        <td class="center">1.7</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Firefox 1.5</td>
-                                        <td>Win 98+ / OSX.2+</td>
-                                        <td class="center">1.8</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Firefox 2.0</td>
-                                        <td>Win 98+ / OSX.2+</td>
-                                        <td class="center">1.8</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Firefox 3.0</td>
-                                        <td>Win 2k+ / OSX.3+</td>
-                                        <td class="center">1.9</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Camino 1.0</td>
-                                        <td>OSX.2+</td>
-                                        <td class="center">1.8</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Camino 1.5</td>
-                                        <td>OSX.3+</td>
-                                        <td class="center">1.8</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Netscape 7.2</td>
-                                        <td>Win 95+ / Mac OS 8.6-9.2</td>
-                                        <td class="center">1.7</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Netscape Browser 8</td>
-                                        <td>Win 98SE+</td>
-                                        <td class="center">1.7</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Netscape Navigator 9</td>
-                                        <td>Win 98+ / OSX.2+</td>
-                                        <td class="center">1.8</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.0</td>
-                                        <td>Win 95+ / OSX.1+</td>
-                                        <td class="center">1</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.1</td>
-                                        <td>Win 95+ / OSX.1+</td>
-                                        <td class="center">1.1</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.2</td>
-                                        <td>Win 95+ / OSX.1+</td>
-                                        <td class="center">1.2</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.3</td>
-                                        <td>Win 95+ / OSX.1+</td>
-                                        <td class="center">1.3</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.4</td>
-                                        <td>Win 95+ / OSX.1+</td>
-                                        <td class="center">1.4</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.5</td>
-                                        <td>Win 95+ / OSX.1+</td>
-                                        <td class="center">1.5</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.6</td>
-                                        <td>Win 95+ / OSX.1+</td>
-                                        <td class="center">1.6</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.7</td>
-                                        <td>Win 98+ / OSX.1+</td>
-                                        <td class="center">1.7</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Mozilla 1.8</td>
-                                        <td>Win 98+ / OSX.1+</td>
-                                        <td class="center">1.8</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Seamonkey 1.1</td>
-                                        <td>Win 98+ / OSX.2+</td>
-                                        <td class="center">1.8</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Gecko</td>
-                                        <td>Epiphany 2.20</td>
-                                        <td>Gnome</td>
-                                        <td class="center">1.8</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Webkit</td>
-                                        <td>Safari 1.2</td>
-                                        <td>OSX.3</td>
-                                        <td class="center">125.5</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Webkit</td>
-                                        <td>Safari 1.3</td>
-                                        <td>OSX.3</td>
-                                        <td class="center">312.8</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Webkit</td>
-                                        <td>Safari 2.0</td>
-                                        <td>OSX.4+</td>
-                                        <td class="center">419.3</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Webkit</td>
-                                        <td>Safari 3.0</td>
-                                        <td>OSX.4+</td>
-                                        <td class="center">522.1</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Webkit</td>
-                                        <td>OmniWeb 5.5</td>
-                                        <td>OSX.4+</td>
-                                        <td class="center">420</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Webkit</td>
-                                        <td>iPod Touch / iPhone</td>
-                                        <td>iPod</td>
-                                        <td class="center">420.1</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Webkit</td>
-                                        <td>S60</td>
-                                        <td>S60</td>
-                                        <td class="center">413</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Presto</td>
-                                        <td>Opera 7.0</td>
-                                        <td>Win 95+ / OSX.1+</td>
-                                        <td class="center">-</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Presto</td>
-                                        <td>Opera 7.5</td>
-                                        <td>Win 95+ / OSX.2+</td>
-                                        <td class="center">-</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Presto</td>
-                                        <td>Opera 8.0</td>
-                                        <td>Win 95+ / OSX.2+</td>
-                                        <td class="center">-</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Presto</td>
-                                        <td>Opera 8.5</td>
-                                        <td>Win 95+ / OSX.2+</td>
-                                        <td class="center">-</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Presto</td>
-                                        <td>Opera 9.0</td>
-                                        <td>Win 95+ / OSX.3+</td>
-                                        <td class="center">-</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Presto</td>
-                                        <td>Opera 9.2</td>
-                                        <td>Win 88+ / OSX.3+</td>
-                                        <td class="center">-</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Presto</td>
-                                        <td>Opera 9.5</td>
-                                        <td>Win 88+ / OSX.3+</td>
-                                        <td class="center">-</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Presto</td>
-                                        <td>Opera for Wii</td>
-                                        <td>Wii</td>
-                                        <td class="center">-</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Presto</td>
-                                        <td>Nokia N800</td>
-                                        <td>N800</td>
-                                        <td class="center">-</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Presto</td>
-                                        <td>Nintendo DS browser</td>
-                                        <td>Nintendo DS</td>
-                                        <td class="center">8.5</td>
-                                        <td class="center">C/A<sup>1</sup>
-                                        </td>
-                                    </tr>
-                                    <tr class="gradeC">
-                                        <td>KHTML</td>
-                                        <td>Konqureror 3.1</td>
-                                        <td>KDE 3.1</td>
-                                        <td class="center">3.1</td>
-                                        <td class="center">C</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>KHTML</td>
-                                        <td>Konqureror 3.3</td>
-                                        <td>KDE 3.3</td>
-                                        <td class="center">3.3</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>KHTML</td>
-                                        <td>Konqureror 3.5</td>
-                                        <td>KDE 3.5</td>
-                                        <td class="center">3.5</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeX">
-                                        <td>Tasman</td>
-                                        <td>Internet Explorer 4.5</td>
-                                        <td>Mac OS 8-9</td>
-                                        <td class="center">-</td>
-                                        <td class="center">X</td>
-                                    </tr>
-                                    <tr class="gradeC">
-                                        <td>Tasman</td>
-                                        <td>Internet Explorer 5.1</td>
-                                        <td>Mac OS 7.6-9</td>
-                                        <td class="center">1</td>
-                                        <td class="center">C</td>
-                                    </tr>
-                                    <tr class="gradeC">
-                                        <td>Tasman</td>
-                                        <td>Internet Explorer 5.2</td>
-                                        <td>Mac OS 8-X</td>
-                                        <td class="center">1</td>
-                                        <td class="center">C</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Misc</td>
-                                        <td>NetFront 3.1</td>
-                                        <td>Embedded devices</td>
-                                        <td class="center">-</td>
-                                        <td class="center">C</td>
-                                    </tr>
-                                    <tr class="gradeA">
-                                        <td>Misc</td>
-                                        <td>NetFront 3.4</td>
-                                        <td>Embedded devices</td>
-                                        <td class="center">-</td>
-                                        <td class="center">A</td>
-                                    </tr>
-                                    <tr class="gradeX">
-                                        <td>Misc</td>
-                                        <td>Dillo 0.8</td>
-                                        <td>Embedded devices</td>
-                                        <td class="center">-</td>
-                                        <td class="center">X</td>
-                                    </tr>
-                                    <tr class="gradeX">
-                                        <td>Misc</td>
-                                        <td>Links</td>
-                                        <td>Text only</td>
-                                        <td class="center">-</td>
-                                        <td class="center">X</td>
-                                    </tr>
-                                    <tr class="gradeX">
-                                        <td>Misc</td>
-                                        <td>Lynx</td>
-                                        <td>Text only</td>
-                                        <td class="center">-</td>
-                                        <td class="center">X</td>
-                                    </tr>
-                                    <tr class="gradeC">
-                                        <td>Misc</td>
-                                        <td>IE Mobile</td>
-                                        <td>Windows Mobile 6</td>
-                                        <td class="center">-</td>
-                                        <td class="center">C</td>
-                                    </tr>
-                                    <tr class="gradeC">
-                                        <td>Misc</td>
-                                        <td>PSP browser</td>
-                                        <td>PSP</td>
-                                        <td class="center">-</td>
-                                        <td class="center">C</td>
-                                    </tr>
-                                    <tr class="gradeU">
-                                        <td>Other browsers</td>
-                                        <td>All others</td>
-                                        <td>-</td>
-                                        <td class="center">-</td>
-                                        <td class="center">U</td>
-                                    </tr>
+									<script>
+									   $('.addExam').click(function(){
+									   var chapterID = $(this).attr('data-id');
+									   $('#ModalAddExam #chapterID').val(chapterID);
+									});
+										</script>
+								<?php
+									}
+								?>
                                 </tbody>
-                            </table>
-                            <!-- /.table-responsive -->
-                            <div class="well">
-                                <h4>DataTables Usage Information</h4>
-                                <p>DataTables is a very flexible, advanced tables plugin for jQuery. In SB Admin, we are using a specialized version of DataTables built for Bootstrap 3. We have also customized the table headings to use Font Awesome icons in place of images. For complete documentation on DataTables, visit their website at <a target="_blank" href="https://datatables.net/">https://datatables.net/</a>.</p>
-                                <a class="btn btn-default btn-lg btn-block" target="_blank" href="https://datatables.net/">View DataTables Documentation</a>
-                            </div>
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->
-                </div>
-                <!-- /.col-lg-12 -->
-            </div>
-            <!-- /.row -->
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Kitchen Sink
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <div class="table-responsive">
-                                <table class="table table-striped table-bordered table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
-                                            <th>Username</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Mark</td>
-                                            <td>Otto</td>
-                                            <td>@mdo</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Jacob</td>
-                                            <td>Thornton</td>
-                                            <td>@fat</td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Larry</td>
-                                            <td>the Bird</td>
-                                            <td>@twitter</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <!-- /.table-responsive -->
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->
-                </div>
-                <!-- /.col-lg-6 -->
-                <div class="col-lg-6">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Basic Table
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
-                                            <th>Username</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Mark</td>
-                                            <td>Otto</td>
-                                            <td>@mdo</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Jacob</td>
-                                            <td>Thornton</td>
-                                            <td>@fat</td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Larry</td>
-                                            <td>the Bird</td>
-                                            <td>@twitter</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <!-- /.table-responsive -->
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->
-                </div>
-                <!-- /.col-lg-6 -->
-            </div>
-            <!-- /.row -->
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Striped Rows
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <div class="table-responsive">
-                                <table class="table table-striped">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
-                                            <th>Username</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Mark</td>
-                                            <td>Otto</td>
-                                            <td>@mdo</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Jacob</td>
-                                            <td>Thornton</td>
-                                            <td>@fat</td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Larry</td>
-                                            <td>the Bird</td>
-                                            <td>@twitter</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <!-- /.table-responsive -->
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->
-                </div>
-                <!-- /.col-lg-6 -->
-                <div class="col-lg-6">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Bordered Table
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <div class="table-responsive table-bordered">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
-                                            <th>Username</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Mark</td>
-                                            <td>Otto</td>
-                                            <td>@mdo</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Jacob</td>
-                                            <td>Thornton</td>
-                                            <td>@fat</td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Larry</td>
-                                            <td>the Bird</td>
-                                            <td>@twitter</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <!-- /.table-responsive -->
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->
-                </div>
-                <!-- /.col-lg-6 -->
-            </div>
-            <!-- /.row -->
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Hover Rows
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <div class="table-responsive">
-                                <table class="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
-                                            <th>Username</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Mark</td>
-                                            <td>Otto</td>
-                                            <td>@mdo</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td>Jacob</td>
-                                            <td>Thornton</td>
-                                            <td>@fat</td>
-                                        </tr>
-                                        <tr>
-                                            <td>3</td>
-                                            <td>Larry</td>
-                                            <td>the Bird</td>
-                                            <td>@twitter</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <!-- /.table-responsive -->
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->
-                </div>
-                <!-- /.col-lg-6 -->
-                <div class="col-lg-6">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            Context Classes
-                        </div>
-                        <!-- /.panel-heading -->
-                        <div class="panel-body">
-                            <div class="table-responsive">
-                                <table class="table">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th>
-                                            <th>First Name</th>
-                                            <th>Last Name</th>
-                                            <th>Username</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr class="success">
-                                            <td>1</td>
-                                            <td>Mark</td>
-                                            <td>Otto</td>
-                                            <td>@mdo</td>
-                                        </tr>
-                                        <tr class="info">
-                                            <td>2</td>
-                                            <td>Jacob</td>
-                                            <td>Thornton</td>
-                                            <td>@fat</td>
-                                        </tr>
-                                        <tr class="warning">
-                                            <td>3</td>
-                                            <td>Larry</td>
-                                            <td>the Bird</td>
-                                            <td>@twitter</td>
-                                        </tr>
-                                        <tr class="danger">
-                                            <td>4</td>
-                                            <td>John</td>
-                                            <td>Smith</td>
-                                            <td>@jsmith</td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <!-- /.table-responsive -->
-                        </div>
-                        <!-- /.panel-body -->
-                    </div>
-                    <!-- /.panel -->
-                </div>
-                <!-- /.col-lg-6 -->
-            </div>
-            <!-- /.row -->
+                            </table>   
+							<?php
+								mysqli_close($con);
+							?>
         </div>
         <!-- /#page-wrapper -->
-
     </div>
 </div>
 
 
-<!-- Modal -->
-  <div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-    
-      <!-- Modal content-->
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Modal Header</h4>
-        </div>
-        <div class="modal-body">
-          <p>Some text in the modal.</p>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-      
-    </div>
-  </div>
-
     <!-- /#wrapper -->
 
+	    <!-- jQuery -->
+    <script src="vendor/jquery/jquery.min.js"></script>
+
+    <!-- Bootstrap Core JavaScript -->
+    <script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+
+    <!-- Metis Menu Plugin JavaScript -->
+    <script src="vendor/metisMenu/metisMenu.min.js"></script>
+
+    <!-- DataTables JavaScript -->
+    <script src="vendor/datatables/js/jquery.dataTables.js"></script>
+    <script src="vendor/datatables-plugins/dataTables.bootstrap.min.js"></script>
+    <script src="vendor/datatables-responsive/dataTables.responsive.js"></script>
+
+    <!-- Custom Theme JavaScript -->
+    <script src="dist/js/sb-admin-2.js"></script>
+
+    <!-- Page-Level Demo Scripts - Tables - Use for reference -->
+    <script>
+    $(document).ready(function() {
+        $('#dataTables-example').DataTable({
+            responsive: true
+        });
+    });
+    </script>
 
 
 </body>
